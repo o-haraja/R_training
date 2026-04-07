@@ -1,0 +1,14 @@
+{
+  "name": "R Training Environment",
+  "image": "rocker/rstudio:latest",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "REditorSupport.r",
+        "Ikuyadeu.r"
+      ]
+    }
+  },
+  "forwardPorts": [8787],
+  "postCreateCommand": "R -e \"install.packages(c('tidyverse','ggplot2','dplyr'), repos='https://cloud.r-project.org')\""
+}
