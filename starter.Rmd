@@ -1,0 +1,90 @@
+---
+title: "R Codespace — Starter Template"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width  = 8,
+  fig.height = 5
+)
+
+library(tidyverse)
+library(patchwork)
+library(fs)
+library(knitr)
+```
+
+## Welcome to your R Codespace 🎉
+
+This template verifies that your environment is working correctly.
+
+## Check installed packages
+
+```{r check-packages}
+pkgs <- c("tidyverse", "dplyr", "fs", "knitr", "patchwork",
+          "rmarkdown", "quarto", "here", "glue", "janitor")
+
+pkg_status <- tibble(
+  Package   = pkgs,
+  Installed = pkgs %in% rownames(installed.packages()),
+  Version   = map_chr(pkgs, ~ tryCatch(
+    as.character(packageVersion(.x)), error = \(e) "not found"
+  ))
+)
+
+kable(pkg_status, caption = "Package Status")
+```
+
+## Quick dplyr demo
+
+```{r dplyr-demo}
+mtcars |>
+  as_tibble(rownames = "car") |>
+  select(car, mpg, cyl, hp, wt) |>
+  group_by(cyl) |>
+  summarise(
+    n        = n(),
+    mean_mpg = mean(mpg) |> round(1),
+    mean_hp  = mean(hp)  |> round(1)
+  ) |>
+  kable(caption = "mtcars summary by cylinder count")
+```
+
+## Plots with patchwork
+
+```{r patchwork-demo, fig.height=6}
+p1 <- ggplot(mpg, aes(displ, hwy, colour = class)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Engine displacement vs Highway MPG") +
+  theme_minimal()
+
+p2 <- ggplot(mpg, aes(class, fill = class)) +
+  geom_bar(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Vehicle class counts") +
+  theme_minimal()
+
+p1 / p2   # patchwork stacks plots vertically
+```
+
+## File system with `fs`
+
+```{r fs-demo}
+# List files in current project directory
+dir_info(".") |>
+  select(path, type, size) |>
+  filter(type == "file") |>
+  arrange(path) |>
+  kable(caption = "Project files")
+```

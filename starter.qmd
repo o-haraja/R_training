@@ -1,0 +1,50 @@
+---
+title: "R Codespace — Quarto Starter"
+author: "Your Name"
+date: today
+format:
+  html:
+    toc: true
+    code-fold: true
+    theme: cosmo
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(knitr)
+```
+
+## Quick sanity check
+
+```{r}
+tibble(
+  package = c("tidyverse", "dplyr", "patchwork", "fs", "knitr"),
+  version = map_chr(package, ~ as.character(packageVersion(.x)))
+) |>
+  kable()
+```
+
+## Example plot
+
+```{r}
+#| label: fig-demo
+#| fig-cap: "A quick ggplot2 demo"
+
+ggplot(diamonds |> slice_sample(n = 1000), aes(carat, price, colour = cut)) +
+  geom_point(alpha = 0.6, size = 1.5) +
+  scale_colour_viridis_d() +
+  labs(
+    title   = "Diamond carat vs price",
+    x       = "Carat",
+    y       = "Price (USD)",
+    colour  = "Cut"
+  ) +
+  theme_minimal(base_size = 13)
+```

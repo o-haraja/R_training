@@ -1,14 +1,54 @@
 {
-  "name": "R Training Environment",
-  "image": "rocker/rstudio:latest",
+  "name": "R Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+      "version": "release"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
+  },
+
+  // VS Code settings
   "customizations": {
     "vscode": {
       "extensions": [
         "REditorSupport.r",
-        "Ikuyadeu.r"
-      ]
+        "RDebugger.r-debugger",
+        "quarto.quarto",
+        "reditorsupport.r-lsp",
+        "ms-toolsai.jupyter",
+        "yzhang.markdown-all-in-one"
+      ],
+      "settings": {
+        "r.rterm.linux": "/usr/local/bin/R",
+        "r.bracketedPaste": true,
+        "r.sessionWatcher": true,
+        "r.plot.useHttpgd": true,
+        "editor.formatOnSave": true,
+        "[r]": {
+          "editor.defaultFormatter": "REditorSupport.r"
+        },
+        "files.associations": {
+          "*.Rmd": "rmd",
+          "*.qmd": "quarto"
+        }
+      }
     }
   },
-  "forwardPorts": [8787],
-  "postCreateCommand": "R -e \"install.packages(c('tidyverse','ggplot2','dplyr'), repos='https://cloud.r-project.org')\""
+
+  // Forward ports if needed (e.g., Shiny apps)
+  "forwardPorts": [3838, 4321],
+  "portsAttributes": {
+    "3838": { "label": "Shiny App" },
+    "4321": { "label": "Quarto Preview" }
+  },
+
+  // Post-creation command to install R packages
+  "postCreateCommand": "Rscript /usr/local/lib/R/setup/install_packages.R",
+
+  "remoteUser": "vscode"
 }
