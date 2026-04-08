@@ -1,38 +1,14 @@
 {
-  "name": "R Development Environment",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-
+  "name": "R Tidyverse",
+  "image": "rocker/tidyverse:4.5.0",
   "customizations": {
     "vscode": {
       "extensions": [
         "REditorSupport.r",
-        "RDebugger.r-debugger",
-        "quarto.quarto",
-        "ms-toolsai.jupyter",
-        "yzhang.markdown-all-in-one"
-      ],
-      "settings": {
-        // R is at /usr/bin/R when installed via apt from CRAN
-        "r.rterm.linux": "/usr/bin/R",
-        "r.bracketedPaste": true,
-        "r.sessionWatcher": true,
-        "r.plot.useHttpgd": true,
-        "[r]": {
-          "editor.defaultFormatter": "REditorSupport.r"
-        },
-        "files.associations": {
-          "*.Rmd": "rmd",
-          "*.qmd": "quarto"
-        },
-        "terminal.integrated.defaultProfile.linux": "bash"
-      }
+        "RDebugger.r-debugger"
+      ]
     }
   },
-
-  // Install all project R packages after the container starts
-  "postCreateCommand": "Rscript /usr/local/lib/R/setup/install_packages.R",
-
-  "remoteUser": "vscode"
+  "postCreateCommand": "R -e \"message('R is ready!')\"",
+  "remoteUser": "rstudio"
 }
