@@ -1,6 +1,8 @@
 {
   "name": "R Tidyverse",
-  "image": "rocker/tidyverse:4.5.0",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
