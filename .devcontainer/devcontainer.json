@@ -14,7 +14,6 @@
         "yzhang.markdown-all-in-one"
       ],
       "settings": {
-        // R is at /usr/bin/R when installed via apt from CRAN
         "r.rterm.linux": "/usr/bin/R",
         "r.bracketedPaste": true,
         "r.sessionWatcher": true,
@@ -31,8 +30,6 @@
     }
   },
 
-  // Install all project R packages after the container starts
-  "postCreateCommand": "Rscript /usr/local/lib/R/setup/install_packages.R",
-
+  // No postCreateCommand needed — packages are baked into the image
   "remoteUser": "vscode"
 }
