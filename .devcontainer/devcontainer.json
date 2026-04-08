@@ -9,6 +9,8 @@
       ]
     }
   },
-  "postCreateCommand": "R -e \"message('R is ready!')\"",
+  "forwardPorts": [8787],
+  "postStartCommand": "sudo rstudio-server start",
+  "postCreateCommand": "R -e \"install.packages(c('patchwork', 'janitor', 'here', 'quarto')); message('R is ready!')\"",
   "remoteUser": "rstudio"
 }
