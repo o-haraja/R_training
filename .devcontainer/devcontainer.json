@@ -4,50 +4,34 @@
     "dockerfile": "Dockerfile"
   },
 
-  // Features to add to the dev container
-  "features": {
-    "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
-      "version": "release"
-    },
-    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
-  },
-
-  // VS Code settings
   "customizations": {
     "vscode": {
       "extensions": [
         "REditorSupport.r",
         "RDebugger.r-debugger",
         "quarto.quarto",
-        "reditorsupport.r-lsp",
         "ms-toolsai.jupyter",
         "yzhang.markdown-all-in-one"
       ],
       "settings": {
-        "r.rterm.linux": "/usr/local/bin/R",
+        // R is at /usr/bin/R when installed via apt from CRAN
+        "r.rterm.linux": "/usr/bin/R",
         "r.bracketedPaste": true,
         "r.sessionWatcher": true,
         "r.plot.useHttpgd": true,
-        "editor.formatOnSave": true,
         "[r]": {
           "editor.defaultFormatter": "REditorSupport.r"
         },
         "files.associations": {
           "*.Rmd": "rmd",
           "*.qmd": "quarto"
-        }
+        },
+        "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
   },
 
-  // Forward ports if needed (e.g., Shiny apps)
-  "forwardPorts": [3838, 4321],
-  "portsAttributes": {
-    "3838": { "label": "Shiny App" },
-    "4321": { "label": "Quarto Preview" }
-  },
-
-  // Post-creation command to install R packages
+  // Install all project R packages after the container starts
   "postCreateCommand": "Rscript /usr/local/lib/R/setup/install_packages.R",
 
   "remoteUser": "vscode"
