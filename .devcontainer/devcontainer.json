@@ -5,12 +5,12 @@
     "vscode": {
       "extensions": [
         "REditorSupport.r",
-        "RDebugger.r-debugger"
+        "RDebugger.r-debugger",
+        "tht13.html-preview-vscode"
       ]
     }
   },
   "forwardPorts": [8787],
-  "postStartCommand": "sudo rstudio-server start",
-  "postCreateCommand": "R -e \"install.packages(c('patchwork', 'janitor', 'here', 'quarto', 'languageserver')); message('R is ready!')\"",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
   "remoteUser": "rstudio"
 }
